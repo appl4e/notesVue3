@@ -2,24 +2,16 @@ const notes = {
   namespaced: true,
   state(){
     return{
-      notes: [
-        {
-          id: 1,
-          title: "Just a note",
-          desc: "What are you doing?",
-          color: "#ff00ff",
-          time: "now"
-        },
-        {
-          id: 2,
-          title: "Another note",
-          desc: "What are you doing?",
-          color: "#ff00ff",
-          time: "now"
-        }
-      ],
+      notes: JSON.parse(localStorage.getItem('notes')) || [],
       colors: ["#D8E2DC", "#FFE5D9","#FBFAF0","#FFE9EE","#FFDDE4"]
     }
+  },
+  getters: {
+    count(state){
+      localStorage.setItem('notes', JSON.stringify(state.notes));
+      return state.notes.length;
+    },
+   
   },
   mutations: {
     addNote(state, note){
