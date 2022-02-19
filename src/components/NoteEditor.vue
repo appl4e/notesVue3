@@ -8,7 +8,7 @@
           v-for="( color, index ) in colors"
           :key="color"
           class="cursor-pointer"
-          :class="'c' + (index + 1)"
+          :class="['c' + (index + 1), { 'color-border': color == note.color }]"
           :data-note-color="color"
           @click="note.color = color"
         ></span>
