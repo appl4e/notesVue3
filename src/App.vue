@@ -5,7 +5,7 @@ import NoteEditor from './components/NoteEditor.vue'
 import Note from './components/Note.vue'
 import Filter from './components/Filter.vue'
 import Layout from './components/Layout.vue'
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -15,7 +15,7 @@ export default {
     Layout
   },
   computed: {
-    ...mapState('notes', ['notes']),
+    ...mapGetters('notes', ['filteredNotes']),
   },
 };
 </script>
@@ -27,7 +27,7 @@ export default {
     <NoteEditor />
     <Filter />
     <div class="notes">
-      <Note v-for="note in notes" :key="note.id" :note="note" />
+      <Note v-for="note in filteredNotes" :key="note.id" :note="note" />
     </div>
   </Layout>
 </template>
