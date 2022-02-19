@@ -15,7 +15,7 @@ export default {
     Layout
   },
   computed: {
-    ...mapState(['notes']),
+    ...mapState('notes', ['notes']),
   },
 };
 </script>

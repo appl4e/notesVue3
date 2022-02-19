@@ -1,16 +1,53 @@
 <template>
-  <div class="contextbox">
-    <input type="text" placeholder="Title" />
-    <textarea rows="8" placeholder="Description" class spellcheck="false"></textarea>
+  <form class="contextbox" @submit.prevent="addNote">
+    <input v-model="note.title" type="text" placeholder="Title" />
+    <textarea v-model="note.desc" rows="8" placeholder="Description" spellcheck="false"></textarea>
     <div class="controls">
       <div class="colors">
-        <span class="c1" data-note-color="#D8E2DC"></span>
-        <span class="c2" data-note-color="#FFE5D9"></span>
-        <span class="c3" data-note-color="#FBFAF0"></span>
-        <span class="c4" data-note-color="#FFE9EE"></span>
-        <span class="c5" data-note-color="#FFDDE4"></span>
+        <span
+          v-for="( color, index ) in colors"
+          :key="color"
+          class="cursor-pointer"
+          :class="'c' + (index + 1)"
+          :data-note-color="color"
+          @click="note.color = color"
+        ></span>
       </div>
       <button>Add</button>
     </div>
-  </div>
+  </form>
 </template>
+<script>
+import { mapState } from "vuex"
+import { v4 } from "uuid"
+
+export default {
+  data() {
+    return {
+      note: {
+        title: "",
+        desc: "",
+        color: null
+      }
+    }
+  },
+  computed: {
+    ...mapState("notes", ["colors"])
+  },
+  methods: {
+    addNote() {
+      this.note.id = v4();
+      this.note.time = new Date();
+      this.$store.commit('notes/addNote', this.note);
+
+      this.note = {
+        title: "",
+        desc: "",
+        color: null
+      }
+
+    }
+  }
+
+}
+</script>
