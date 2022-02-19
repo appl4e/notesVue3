@@ -4,6 +4,7 @@
     <button
       v-for="color in notesByColor"
       :key="color.color"
+      :class="{ 'color-border': color.color == filterColor }"
       :style="{ 'background-color': color.color }"
       @click="$store.commit('notes/filterNotes', color.color)"
     >{{ color.noteCount }}</button>
@@ -14,7 +15,7 @@ import { mapGetters, mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState('notes', ["colors"]),
+    ...mapState('notes', ["colors", "filterColor"]),
     ...mapGetters('notes', ["count", "notesByColor"])
   }
 }
